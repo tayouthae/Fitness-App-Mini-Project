@@ -12,7 +12,8 @@ import 'dart:convert';
 import 'dart:async';
 
 Future<void> main() async {
-  await dotenv.load
+  await dotenv.load();
+  
   runApp(MyApp());
 }
 
