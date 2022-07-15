@@ -3,6 +3,7 @@ import 'package:miniproject/SplashScreen/splashScreenWidget.dart';
 import 'package:miniproject/auth.dart';
 import 'package:miniproject/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -10,7 +11,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  await dotenv.load
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   static FirebaseAnalytics analytics = new FirebaseAnalytics();
@@ -54,8 +58,9 @@ class MyApp extends StatelessWidget {
 }
 
 Future<String> loginCheck(String email, String password) async {
+  const api_key =  dotenv.env['API_KEY'] ?? "API_KEY not found";
   const url =
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD6Pb9rUD9yRS-NTn6LWKHV06kyZYCa5TY';
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${api_key}';
   try {
     final response = await http.post(
       url,
